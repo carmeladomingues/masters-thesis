@@ -1,32 +1,28 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Invisible Ecosystem — System Architecture</title>
+<title>Invisible Ecosystem — System Architecture v2</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #faf9f7; padding: 32px; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #faf9f7; padding: 32px; min-width: 1100px; }
 h1 { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
 .meta { font-size: 12px; color: #888; margin-bottom: 24px; }
 
-/* AI bar */
 .ai-bar { background: #1e1e2e; border-radius: 10px; padding: 14px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
 .ai-dot { width: 8px; height: 8px; border-radius: 50%; background: #a29bfe; flex-shrink: 0; }
 .ai-text { font-size: 12px; color: #c8c4d8; flex: 1; line-height: 1.5; }
 .ai-label { font-size: 11px; font-weight: 700; color: #a29bfe; white-space: nowrap; letter-spacing: 0.05em; }
 
-/* Grid */
 .grid { display: grid; grid-template-columns: 110px repeat(5, 1fr); gap: 8px; }
-.phase-header { text-align: center; padding: 10px 8px; border-radius: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.ph { text-align: center; padding: 10px 8px; border-radius: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 .ph0 { background: #f3f0fb; color: #534AB7; }
 .ph1 { background: #E1F5EE; color: #0F6E56; }
 .ph2 { background: #FAEEDA; color: #854F0B; }
 .ph3 { background: #fef3f3; color: #8b2e2a; }
 .ph4 { background: #f1efe8; color: #5F5E5A; }
 
-.row-label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; text-align: right; padding-right: 8px; padding-top: 12px; line-height: 1.4; }
+.rl { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; text-align: right; padding-right: 8px; padding-top: 12px; line-height: 1.4; }
 .cell { background: #fff; border: 0.5px solid #e5e2dc; border-radius: 10px; padding: 10px 12px; font-size: 12px; color: #555; line-height: 1.5; }
 .cell strong { display: block; font-size: 12px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
 .c0 { border-color: #b8aee0; background: #f9f8fe; }
@@ -36,18 +32,23 @@ h1 { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
 .c4 { border-color: #c9c4be; background: #f9f8f6; }
 .empty { background: transparent; border: none; }
 .span3 { grid-column: span 3; }
+.new-badge { display: inline-block; background: #f3f0fb; color: #534AB7; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+.removed { text-decoration: line-through; color: #bbb; font-size: 11px; }
 
-.divider { grid-column: 1 / -1; border: none; border-top: 0.5px solid #e5e2dc; margin: 4px 0; }
+.div { grid-column: 1 / -1; border: none; border-top: 0.5px solid #e5e2dc; margin: 2px 0; }
 
-/* Arrows */
-.arrows { display: grid; grid-template-columns: 110px repeat(5, 1fr); gap: 8px; margin: 4px 0; }
-.arrow { text-align: center; font-size: 18px; color: #ccc; }
+.change-note { background: #f3f0fb; border: 0.5px solid #b8aee0; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 12px; color: #534AB7; line-height: 1.6; }
+.change-note strong { font-weight: 600; }
 </style>
 </head>
 <body>
 
 <h1>Invisible Ecosystem — System Architecture</h1>
-<p class="meta">Domestic violence support system · P0 to P4 · Portugal</p>
+<p class="meta">Domestic violence support system · P0 to P4 · Portugal · v2 — updated</p>
+
+<div class="change-note">
+  <strong>What changed in v2:</strong> The LLM now responds directly inside the platforms she already uses (ChatGPT, Google, TikTok, Reddit) — no redirection to a site in P0/P1. The conversation happens where she already is. The site only enters from P2 onwards, when she is ready for more structured support. iOS Shortcuts replace the site diary in P1 — she saves notes natively on her iPhone, with an innocent name, no new app needed.
+</div>
 
 <div class="ai-bar">
   <div class="ai-dot"></div>
@@ -57,61 +58,110 @@ h1 { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
 
 <div class="grid">
 
-  <!-- Phase headers -->
   <div></div>
-  <div class="phase-header ph0">P0<br><span style="font-weight:400;font-size:10px;">Doubt</span></div>
-  <div class="phase-header ph1">P1<br><span style="font-weight:400;font-size:10px;">Recognition</span></div>
-  <div class="phase-header ph2">P2<br><span style="font-weight:400;font-size:10px;">Crisis</span></div>
-  <div class="phase-header ph3">P3<br><span style="font-weight:400;font-size:10px;">Separation</span></div>
-  <div class="phase-header ph4">P4<br><span style="font-weight:400;font-size:10px;">Recovery</span></div>
+  <div class="ph ph0">P0<br><span style="font-weight:400;font-size:10px;">Doubt</span></div>
+  <div class="ph ph1">P1<br><span style="font-weight:400;font-size:10px;">Recognition</span></div>
+  <div class="ph ph2">P2<br><span style="font-weight:400;font-size:10px;">Crisis</span></div>
+  <div class="ph ph3">P3<br><span style="font-weight:400;font-size:10px;">Separation</span></div>
+  <div class="ph ph4">P4<br><span style="font-weight:400;font-size:10px;">Recovery</span></div>
 
-  <div class="divider"></div>
+  <div class="div"></div>
 
-  <!-- Entry -->
-  <div class="row-label">Entry<br>point</div>
-  <div class="cell c0"><strong>AI intercepts search</strong>Google, TikTok, ChatGPT, Reddit — AI detects IPV patterns in her query and responds in a humanised, non-institutional way</div>
-  <div class="cell c1"><strong>Returns to site</strong>She comes back on her own — AI recognises her pattern and adapts content to P1</div>
-  <div class="cell c2"><strong>Escalation trigger</strong>Search pattern or diary entry signals crisis — system shifts to action mode</div>
-  <div class="cell c3"><strong>Post-separation</strong>She returns for legal, financial, and emotional resources</div>
-  <div class="cell c4"><strong>Recovery</strong>Long-term support, rebuilding autonomy and community</div>
+  <div class="rl">Entry point</div>
+  <div class="cell c0">
+    <strong>LLM responds in-platform <span class="new-badge">updated</span></strong>
+    She asks something vague on ChatGPT, Google, TikTok or Reddit. The trained LLM responds directly there — humanised, non-institutional. No redirection. The conversation stays where she already is.
+  </div>
+  <div class="cell c1">
+    <strong>Returns to conversation <span class="new-badge">updated</span></strong>
+    She comes back to the same platform. LLM detects recurring pattern. Gently suggests saving her thoughts — via iOS Shortcut, no new app needed.
+  </div>
+  <div class="cell c2">
+    <strong>Site enters here <span class="new-badge">updated</span></strong>
+    Escalation detected in conversation or saved notes. LLM suggests the site for the first time — as structured support, not entry point.
+  </div>
+  <div class="cell c3">
+    <strong>Post-separation support</strong>
+    She uses the site for legal, financial and emotional resources. APAV, Linha 144, RNAVVD.
+  </div>
+  <div class="cell c4">
+    <strong>Recovery</strong>
+    Long-term support, rebuilding autonomy and community.
+  </div>
 
-  <div class="divider"></div>
+  <div class="div"></div>
 
-  <!-- Site mode -->
-  <div class="row-label">Site<br>mode</div>
-  <div class="cell c0"><strong>Read Mode</strong>Content about relationship dynamics and abuse types — warm, non-institutional language. No mention of "domestic violence"</div>
-  <div class="cell c1"><strong>Diary Mode</strong>She records incidents — date, description, emotional impact. AI analyses entries to map her phase and abuse type</div>
-  <div class="cell c2"><strong>Action Mode</strong>Smart curator activates — recommends specific Portuguese initiatives based on her situation</div>
-  <div class="cell c3"><strong>Legal & Safety Mode</strong>Evidence PDF export, legal guidance, safety planning, institutional referrals</div>
-  <div class="cell c4"><strong>Recovery Mode</strong>Mental health resources, financial autonomy tools, community connections</div>
+  <div class="rl">Where it happens</div>
+  <div class="cell c0">
+    <strong>Inside existing platforms</strong>
+    ChatGPT · Google · TikTok comments/search · Reddit responses. The LLM is the layer on top — she never leaves the platform she opened.
+  </div>
+  <div class="cell c1">
+    <strong>iOS native storage <span class="new-badge">updated</span></strong>
+    iOS Shortcut saves her thoughts to iPhone Notes, Voice Memos, or a custom named folder. Siri activates it. No new app, no site, no account.
+  </div>
+  <div class="cell c2">
+    <strong>Site — Action Mode</strong>
+    Smart curator activates. Recommends specific Portuguese initiatives based on abuse type, location and phase.
+  </div>
+  <div class="cell c3">
+    <strong>Site — Legal & Safety Mode</strong>
+    PDF evidence export from saved iOS notes. Legal guidance. Safety planning tools.
+  </div>
+  <div class="cell c4">
+    <strong>Site — Recovery Mode</strong>
+    Mental health resources, financial autonomy tools, community connections.
+  </div>
 
-  <div class="divider"></div>
+  <div class="div"></div>
 
-  <!-- AI actions -->
-  <div class="row-label">AI<br>actions</div>
-  <div class="cell c0">Identifies vague language — "is this normal?", "maybe I'm too sensitive" — classifies as P0. Shows read-mode content only. No labels, no diagnosis.</div>
-  <div class="cell c1">Detects recurring patterns across sessions. Suggests diary mode. Begins mapping abuse type — emotional, financial, or tech abuse.</div>
-  <div class="cell c2">Detects escalation signals. Activates smart curator. Surfaces emergency contacts discreetly. Connects Apple Watch SOS if configured.</div>
-  <div class="cell c3">Generates evidence timeline from diary entries. Matches her profile to APAV, Linha 144, or RNAVVD based on location and need.</div>
-  <div class="cell c4">Monitors long-term patterns. Connects to mental health and financial independence resources. Tracks recovery milestones.</div>
+  <div class="rl">AI actions</div>
+  <div class="cell c0">
+    Detects IPV patterns in vague natural language — "is this normal?", "maybe I'm too sensitive", "he gets angry when I see friends". Responds in a humanised way. No labels, no diagnosis, no redirects.
+  </div>
+  <div class="cell c1">
+    Detects recurring pattern across sessions. Asks: "would you like to save what you're feeling somewhere private?" — triggers iOS Shortcut. Begins mapping abuse type from conversation.
+  </div>
+  <div class="cell c2">
+    Detects escalation. Introduces site for the first time. Activates smart curator. Surfaces emergency contacts. Connects Apple Watch SOS if set up.
+  </div>
+  <div class="cell c3">
+    Generates evidence timeline from iOS saved notes. Matches her to APAV, Linha 144 or RNAVVD based on location and abuse type.
+  </div>
+  <div class="cell c4">
+    Shifts to recovery mode. Connects to mental health and financial independence resources. Tracks long-term patterns.
+  </div>
 
-  <div class="divider"></div>
+  <div class="div"></div>
 
-  <!-- Touchpoints -->
-  <div class="row-label">Touch<br>points</div>
-  <div class="cell c0">Google card · TikTok · ChatGPT · Reddit · Site read mode</div>
-  <div class="cell c1">Site diary · Siri voice entry · Google Assistant</div>
-  <div class="cell c2">Site action mode · Smart curator · Apple Watch SOS</div>
-  <div class="cell c3">PDF export · APAV · Linha 144 · RNAVVD · Legal directory</div>
-  <div class="cell c4">Mental health links · Financial tools · Community</div>
+  <div class="rl">Touch points</div>
+  <div class="cell c0">
+    <div>ChatGPT · Google · TikTok · Reddit</div>
+    <div class="removed">Site read mode</div>
+  </div>
+  <div class="cell c1">
+    <div>iOS Shortcut · iPhone Notes · Siri · Voice Memos</div>
+    <div class="removed">Site diary · Site read mode</div>
+  </div>
+  <div class="cell c2">
+    Site action mode · Smart curator · Apple Watch SOS · Linha 144
+  </div>
+  <div class="cell c3">
+    PDF export · APAV · Linha 144 · RNAVVD · Legal directory
+  </div>
+  <div class="cell c4">
+    Mental health links · Financial tools · Community
+  </div>
 
-  <div class="divider"></div>
+  <div class="div"></div>
 
-  <!-- Smart curator -->
-  <div class="row-label">Smart<br>curator</div>
+  <div class="rl">Smart curator</div>
   <div class="empty"></div>
   <div class="empty"></div>
-  <div class="cell c2 span3"><strong>Activated from P2 onwards</strong>Based on abuse type detected (emotional, financial, tech), location in Portugal, and current phase — recommends the right initiative contextually. Not a list of links — a specific, personalised recommendation: <em>"Based on what you're experiencing, APAV can help you with legal support in Lisboa."</em></div>
+  <div class="cell c2 span3">
+    <strong>Activated from P2 onwards</strong>
+    Based on abuse type detected (emotional, financial, tech), location in Portugal, and current phase — recommends the right initiative contextually. Not a list of links — a specific, personalised recommendation: <em>"Based on what you're experiencing, APAV can help you with legal support in Lisboa."</em>
+  </div>
 
 </div>
 
